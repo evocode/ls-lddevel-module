@@ -1,6 +1,6 @@
 <?php
 
-class Devel_Class
+class LDDevel_Class
 {
     protected static $instance = null;
 

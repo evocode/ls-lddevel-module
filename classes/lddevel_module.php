@@ -1,6 +1,6 @@
 <?php
 
-class Devel_Module extends Core_ModuleBase
+class LDDevel_Module extends Core_ModuleBase
 {
     public static $engine = null;
 
@@ -22,7 +22,7 @@ class Devel_Module extends Core_ModuleBase
         if( !$continue )
             return;
 
-        self::$engine = Devel_Class::create();
+        self::$engine = LDDevel_Class::create();
 
         Backend::$events->addEvent('core:onInitialize', self::$engine, 'core_initialize');
         //Backend::$events->addEvent('core:onUninitialize', self::$engine, 'core_uninitialize');
