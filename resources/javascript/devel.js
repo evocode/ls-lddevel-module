@@ -1,8 +1,13 @@
 
 jQuery(document).ready(function($) {
     $('div.devel-heading').live('click', function() {
-        $(this).toggleClass('devel-collapsed');
-        $(this).next().toggle();
+        if($(this).next().is(':visible')) {
+            $(this).find('.min').text('+');
+            $(this).next().toggle();
+        } else {
+            $(this).find('.min').text('-');
+            $(this).next().toggle();
+        }
     });
 });
 
@@ -19,9 +24,18 @@ LDDevel.Config = {
 
 LDDevel.Logger = {
     current: null,
+    firstRequest: true,
+    firstHeader: true,
 
     init: function(options) {
         LDDevel.Config = $.extend(LDDevel.Config, options);
+
+        if(!this.firstRequest) {
+            this.minimizeAll();
+        }
+
+        this.firstRequest = false;
+        this.firstHeader = true;
     },
 
     log: function (obj, msgtype) {
@@ -161,7 +175,13 @@ LDDevel.Logger = {
             str = String(titlename);
             str = this.htmlEncode(str);
 
-            var container = jQuery('<div class="devel-heading">' + str + '</div><div class="devel-container" style="display: block"></div>');
+            var classes = 'devel-heading';
+            if(this.firstHeader) {
+                classes += ' devel-root';
+                this.firstHeader = false;
+            }
+
+            var container = jQuery('<div class="' + classes + '">' + str + '<span class="min">-</span></div><div class="devel-container" style="display: block"></div>');
 
             if( !this.current )
                 this.current = jQuery(LDDevel.Config.cssclass);
@@ -176,4 +196,13 @@ LDDevel.Logger = {
         var parent = this.current.parent('.devel-container:first');
         this.current = parent.length > 0 ? parent : null;
     },
+
+    minimizeAll: function() {
+        $('div.devel-root').each(function(index) {
+            if($(this).next().is(':visible')) {
+                $(this).find('.min').text('+');
+                $(this).next().toggle();
+            }
+        })
+    }
 };

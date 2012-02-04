@@ -37,6 +37,11 @@ div.devel-module div.devel-heading {
     cursor: pointer;
 }
 
+div.devel-module div.devel-heading .min {
+    display:block;
+    float:right;
+}
+
 div.devel-module div.devel-collapsed {
     background:#ccc;
 }
