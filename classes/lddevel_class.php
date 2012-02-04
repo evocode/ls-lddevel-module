@@ -428,7 +428,7 @@
 					$output .= self::recursive_print($varname . "['" . $key . "']", $val);
 				}
 			} else {
-				$output .= $varname . ' = ' . $varval . "<br>\n";
+				$output .= $varname . ' = ' . str_replace('\\', '\\\\', $varval) . "<br>\n";
 			}
 	
 			return $output;
