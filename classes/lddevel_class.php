@@ -205,64 +205,64 @@
 			$output .= '<script type="text/javascript"> jQuery(document).ready(function($) { ' . "\n";
 	
 			//if( $has_firebug ) {
-				//$output .= 'LSDevel.Logger.init({ hasFirebug: true });' . "\n";
+				//$output .= 'LDDevel.Logger.init({ hasFirebug: true });' . "\n";
 			//}
 	
-			$output .= 'LSDevel.Logger.init();' . "\n";
+			$output .= 'LDDevel.Logger.init();' . "\n";
 	
 			//Start Request
 	
 			$title = $is_ajax ? 'Ajax Page Request' : 'Page Request';
-			$output .= 'LSDevel.Logger.startGroup("'.$title.': '.date("F j, Y, g:i a").'");' . "\n";
+			$output .= 'LDDevel.Logger.startGroup("'.$title.': '.date("F j, Y, g:i a").'");' . "\n";
 	
 	
 			//Start Page Information
 	
-			$output .= 'LSDevel.Logger.startGroup("Page Information");' . "\n";
+			$output .= 'LDDevel.Logger.startGroup("Page Information");' . "\n";
 	
 			if( $real_page_load_time == 0 )
 			{
-				$output .= 'LSDevel.Logger.log("Assume Page Load Time: ' . number_format($page_load_time, 4) . ' s");' . "\n";
+				$output .= 'LDDevel.Logger.log("Assume Page Load Time: ' . number_format($page_load_time, 4) . ' s");' . "\n";
 	
-				$output .= 'LSDevel.Logger.log('. self::safe_parameter('This information is tracked after Lemonstand has intilized resulting in slightly different values. Please consider completing the installation part 2 <a href="http://forum.lemonstandapp.com/topic/1735-devel-module/" target="_blank">here</a> to track the real data.') . ', "info");' . "\n";
+				$output .= 'LDDevel.Logger.log('. self::safe_parameter('This information is tracked after Lemonstand has intilized resulting in slightly different values. Please consider completing the installation part 2 <a href="http://forum.lemonstandapp.com/topic/1735-devel-module/" target="_blank">here</a> to track the real data.') . ', "info");' . "\n";
 			}
 			else
 			{
-				$output .= 'LSDevel.Logger.log("Page Load Time: ' . number_format($real_page_load_time, 4) . ' s");' . "\n";
+				$output .= 'LDDevel.Logger.log("Page Load Time: ' . number_format($real_page_load_time, 4) . ' s");' . "\n";
 	
 				if( $boot_sequence > 0 ) {
-					$output .= 'LSDevel.Logger.log(" + Boot Sequence: ' . number_format($boot_sequence, 4) . ' s");' . "\n";
+					$output .= 'LDDevel.Logger.log(" + Boot Sequence: ' . number_format($boot_sequence, 4) . ' s");' . "\n";
 				}
 	
 				if( $initialize_sequence > 0 ) {
-					$output .= 'LSDevel.Logger.log(" + Init Sequence: ' . number_format($initialize_sequence, 4) . ' s");' . "\n";
+					$output .= 'LDDevel.Logger.log(" + Init Sequence: ' . number_format($initialize_sequence, 4) . ' s");' . "\n";
 				}
 	
 				if( $page_sequence > 0 ) {
-					$output .= 'LSDevel.Logger.log(" + Page Sequence: ' . number_format($page_sequence, 4) . ' s");' . "\n";
+					$output .= 'LDDevel.Logger.log(" + Page Sequence: ' . number_format($page_sequence, 4) . ' s");' . "\n";
 				}
 	
-				//$output .= 'LSDevel.Logger.log(" + Total Queries: ' . number_format(self::$sql_total_times, 4) . ' s");' . "\n";
+				//$output .= 'LDDevel.Logger.log(" + Total Queries: ' . number_format(self::$sql_total_times, 4) . ' s");' . "\n";
 			}
 	
-			$output .= 'LSDevel.Logger.log("Peak Memory Usage: ' . number_format($peak_memory_usage/1024/1024) . ' MB (' .	number_format($peak_memory_usage/1024) . ' KB)");' . "\n";
+			$output .= 'LDDevel.Logger.log("Peak Memory Usage: ' . number_format($peak_memory_usage/1024/1024) . ' MB (' .	number_format($peak_memory_usage/1024) . ' KB)");' . "\n";
 	
-			$output .= 'LSDevel.Logger.log("Memory Usage: ' . number_format($regular_memory_usage/1024/1024) . ' MB (' . number_format($regular_memory_usage/1024) . ' KB)");' . "\n";
+			$output .= 'LDDevel.Logger.log("Memory Usage: ' . number_format($regular_memory_usage/1024/1024) . ' MB (' . number_format($regular_memory_usage/1024) . ' KB)");' . "\n";
 	
-			$output .= 'LSDevel.Logger.log("Total Queries: ' . number_format($total_queries) . '");' . "\n";
+			$output .= 'LDDevel.Logger.log("Total Queries: ' . number_format($total_queries) . '");' . "\n";
 	
-			$output .= 'LSDevel.Logger.log("Average Query Time: ' . number_format($average_query, 4) . ' s");' . "\n";
+			$output .= 'LDDevel.Logger.log("Average Query Time: ' . number_format($average_query, 4) . ' s");' . "\n";
 	
-			$output .= 'LSDevel.Logger.log("Total Query Time: ' . number_format(self::$sql_total_times, 4) . ' s");' . "\n";
+			$output .= 'LDDevel.Logger.log("Total Query Time: ' . number_format(self::$sql_total_times, 4) . ' s");' . "\n";
 	
-			$output .= 'LSDevel.Logger.endGroup();' . "\n";
+			$output .= 'LDDevel.Logger.endGroup();' . "\n";
 	
 			//End Page Information
 	
 	
 			//Start Query Log
 	
-			$output .= 'LSDevel.Logger.startGroup("Query Log");' . "\n";
+			$output .= 'LDDevel.Logger.startGroup("Query Log");' . "\n";
 	
 			$note = '<div class="page-query-color-sample query-log-low">&nbsp;</div>';
 			$note .= '<div class="page-query-color-text">- Higher than average execution</div>';
@@ -270,10 +270,10 @@
 			$note .= '<div class="page-query-color-text">- Longer than 1 second</div>';
 			$note .= '<div class="devel-clear"></div>';
 	
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($note).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($note).', "html");' . "\n";
 	
 	
-			$output .= 'LSDevel.Logger.logQueryTable([' . "\n";
+			$output .= 'LDDevel.Logger.logQueryTable([' . "\n";
 			$rid = 1;
 			
 			foreach(self::$sql_log as $querydata) {
@@ -312,11 +312,11 @@
 				$query_time = ( isset(self::$sql_load[$key]) && self::$sql_load[$key]['start'] > 0 && self::$sql_load[$key]['end'] > 0 ) ? self::$sql_load[$key]['end'] - self::$sql_load[$key]['start'] : -1;
 				$time_str = ( $query_time > -1 ) ? number_format($query_time, 4) : '"N/A"';
 	
-				$output .= 'LSDevel.Logger.logQuery("\('.$time_str.'\) '.self::safe_parameter($querydata['sql']).'");' . "\n";
+				$output .= 'LDDevel.Logger.logQuery("\('.$time_str.'\) '.self::safe_parameter($querydata['sql']).'");' . "\n";
 				$rid++;
 			}*/
 	
-			$output .= 'LSDevel.Logger.endGroup();' . "\n";
+			$output .= 'LDDevel.Logger.endGroup();' . "\n";
 	
 			//End Query Log
 	
@@ -346,19 +346,19 @@
 	
 			//Start Other Variables
 	
-			$output .= 'LSDevel.Logger.startGroup("Other Variables");' . "\n";
+			$output .= 'LDDevel.Logger.startGroup("Other Variables");' . "\n";
 	
 			$log = '<strong>GET Data</strong><div class="page-variables-content">' . self::recursive_print('Phpr::$request->get_fields', Phpr::$request->get_fields) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
 			$log = '<strong>POST Data</strong><div class="page-variables-content">' . self::recursive_print('$_POST', $_POST) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
 			$log = '<strong>SESSION Data</strong><div class="page-variables-content">' . self::recursive_print('$_SESSION', $_SESSION) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
 			$log = '<strong>COOKIE Data</strong><div class="page-variables-content">' . wordwrap(self::recursive_print('$_COOKIE', $_COOKIE), 115, "<br />", true) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
 			//$output .= '<div class="page-headers">';
 			//$output .= '<strong>Headers</strong><div class="page-variables-content">' . self::recursive_print('getAllHeaders', getAllHeaders());
@@ -370,19 +370,19 @@
 	
 			$defined_func = get_defined_functions();
 			$log = '<strong>Defined Functions</strong><div class="page-variables-content">' . self::recursive_print('get_defined_functions', $defined_func['user']) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
 			$log = '<strong>Include Files</strong><div class="page-variables-content">' . self::recursive_print('get_included_files', get_included_files()) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
 			//$output .= '<div class="page-interfaces">';
 			//$output .= '<strong>Declared Interfaces</strong><div class="page-variables-content">' . self::recursive_print('get_declared_interfaces', get_declared_interfaces());
 			//$output .= '</div></div>' . "\n";
 	
 			$log = '<strong>Declared Classes</strong><div class="page-variables-content">' . self::recursive_print('get_declared_classes', get_declared_classes()) . '</div>';
-			$output .= 'LSDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
+			$output .= 'LDDevel.Logger.log('.self::safe_parameter($log).', "html");' . "\n";
 	
-			$output .= 'LSDevel.Logger.endGroup();' . "\n";
+			$output .= 'LDDevel.Logger.endGroup();' . "\n";
 	
 			//End Other Variables
 	
@@ -394,7 +394,7 @@
 			//$output .= '</div></div>' . "\n";
 	
 	
-			$output .= 'LSDevel.Logger.endGroup();' . "\n";
+			$output .= 'LDDevel.Logger.endGroup();' . "\n";
 	
 			//End Page Request
 	

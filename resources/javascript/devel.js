@@ -6,9 +6,9 @@ jQuery(document).ready(function($) {
     });
 });
 
-var LSDevel = LSDevel || {};
+var LDDevel = LDDevel || {};
 
-LSDevel.Config = {
+LDDevel.Config = {
     enableDebug: true,
 	debugCount: 0,
     hasFirebug: false,
@@ -17,19 +17,19 @@ LSDevel.Config = {
     cssclass: "#devel-log"
 };
 
-LSDevel.Logger = {
+LDDevel.Logger = {
     current: null,
 
     init: function(options) {
-        LSDevel.Config = $.extend(LSDevel.Config, options);
+        LDDevel.Config = $.extend(LDDevel.Config, options);
     },
 
     log: function (obj, msgtype) {
-        if (LSDevel.Config.enableDebug) {
+        if (LDDevel.Config.enableDebug) {
             if( msgtype == null )
                 msgtype = "log";
 
-            if (!LSDevel.Config.hasFirebug) {
+            if (!LDDevel.Config.hasFirebug) {
                 this.traceHtml(obj, msgtype);
             } else {
                 try {
@@ -51,8 +51,8 @@ LSDevel.Logger = {
     },
 
     logQuery: function(queryObj) {
-        if (LSDevel.Config.enableDebug) {
-            if (!LSDevel.Config.hasFirebug) {
+        if (LDDevel.Config.enableDebug) {
+            if (!LDDevel.Config.hasFirebug) {
                 this.traceQueryHtml(queryObj);
             } else {
                 try {
@@ -65,8 +65,8 @@ LSDevel.Logger = {
     },
 
     logQueryTable: function(queryObj) {
-        if (LSDevel.Config.enableDebug) {
-            if (!LSDevel.Config.hasFirebug) {
+        if (LDDevel.Config.enableDebug) {
+            if (!LDDevel.Config.hasFirebug) {
                 this.traceQueryHtml(queryObj);
             } else {
                 try {
@@ -84,8 +84,8 @@ LSDevel.Logger = {
     },
 
     startGroup: function(titlename) {
-        if (LSDevel.Config.enableDebug) {
-            if (!LSDevel.Config.hasFirebug) {
+        if (LDDevel.Config.enableDebug) {
+            if (!LDDevel.Config.hasFirebug) {
                 this.groupStartHtml(titlename);
             } else {
                 try {
@@ -98,8 +98,8 @@ LSDevel.Logger = {
     },
 
     endGroup: function() {
-        if (LSDevel.Config.enableDebug) {
-            if (!LSDevel.Config.hasFirebug) {
+        if (LDDevel.Config.enableDebug) {
+            if (!LDDevel.Config.hasFirebug) {
                 this.groupEndHtml();
             } else {
                 try {
@@ -120,7 +120,7 @@ LSDevel.Logger = {
     /* Other Functions */
 
     traceHtml: function(str, atype) {
-        if (LSDevel.Config.enableDebug) {
+        if (LDDevel.Config.enableDebug) {
             if( atype != "html" ) {
                 str = String(str);
                 str = this.htmlEncode(str);
@@ -129,15 +129,15 @@ LSDevel.Logger = {
             this.current.append('<div class="log-entry">' + str + '</div>');
 
             /*TODO for objects
-            LSDevel.Debug.traceHtml(obj);
+            LDDevel.Debug.traceHtml(obj);
             for (var i in obj) {
-                LSDevel.Debug.trace(i + ": " + obj[i]);
+                LDDevel.Debug.trace(i + ": " + obj[i]);
             }*/
         }
     },
 
     traceQueryHtml: function(queryObj) {
-        if (LSDevel.Config.enableDebug) {
+        if (LDDevel.Config.enableDebug) {
             var html = '<div class="query-log">';
             for (var i in queryObj) {
                 if( typeof(queryObj[i]['id']) == "undefined" )
@@ -157,14 +157,14 @@ LSDevel.Logger = {
     },
 
     groupStartHtml: function(titlename) {
-        if (LSDevel.Config.enableDebug) {
+        if (LDDevel.Config.enableDebug) {
             str = String(titlename);
             str = this.htmlEncode(str);
 
             var container = jQuery('<div class="devel-heading">' + str + '</div><div class="devel-container" style="display: block"></div>');
 
             if( !this.current )
-                this.current = jQuery(LSDevel.Config.cssclass);
+                this.current = jQuery(LDDevel.Config.cssclass);
 
             container.appendTo(this.current);
 
