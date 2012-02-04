@@ -178,12 +178,13 @@
 	
 			if( !$is_ajax ) {
 	
-			$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/lddevel/resources/css/frontend.css').'" />' . "\n";
+				$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/lddevel/resources/css/frontend.css').'" />' . "\n";
 	
 				if( $has_firebug ) {
 					$output .= '<script src="https://getfirebug.com/firebug-lite.js#overrideConsole=true,startOpened=true"></script>';
 				}
 	
+				$output .= '<script>window.jQuery || document.write(\'<script src="'.root_url('/modules/lddevel/resources/javascript/jquery-1.7.1.min.js').'"><\/script>\')</script>' . "\n";
 				$output .= '<script type="text/javascript" src="'.root_url('/modules/lddevel/resources/javascript/devel.js').'"></script>' . "\n";
 	
 				$output .= '<div id="devel-module" class="devel-module'.($is_backend ? ' devel-module-backend' : '').'">';
