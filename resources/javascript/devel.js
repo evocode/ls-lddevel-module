@@ -158,10 +158,7 @@ LDDevel.Logger = {
                     break;
 
                 var cclass = i % 2 == 0 ? ' query-log-odd' : ' query-log-even';
-                if( queryObj[i]['priority'] == 2 )
-                    cclass += ' query-log-low';
-                else if( queryObj[i]['priority'] == 3 )
-                    cclass += ' query-log-high';
+                cclass += ' query-log-p' + queryObj[i]['priority'];
                 html += '<div class="query-log-entry' + cclass + '"><div class="query-log-number">' + queryObj[i]['id'] + '</div><div class="query-log-query">' + queryObj[i]['sql'] + '</div><div class="query-log-time">' + queryObj[i]['single_time'] + 's [' + queryObj[i]['total_time'] + 's]<br />' + queryObj[i]['single_memory'] + ' [' + queryObj[i]['total_memory'] + ']</div><div class="devel-clear"></div></div>';
             }
             html += '</div>';

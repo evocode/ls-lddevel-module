@@ -117,11 +117,11 @@ div.devel-module div.query-log-entry {
         border-bottom:1px solid #ccc;
     }
 
-    div.devel-module div.query-log-low {
+    div.devel-module div.query-log-p2 {
         background:#FFFFCC;
     }
 
-    div.devel-module div.query-log-high {
+    div.devel-module div.query-log-p3 {
         background:#ff9e9e;
     }
 
