@@ -8,20 +8,20 @@
 		* Page Load
 		*/
 		protected static $page_load = array(
-										'boot'			=>	array('start'=>0, 'end'=>0),
-										'init'			=>	array('start'=>0, 'end'=>0),
-										'page'			=>	array('start'=>0, 'end'=>0)
-									);
+				'boot'	=>	array('start'=>0, 'end'=>0),
+				'init'	=>	array('start'=>0, 'end'=>0),
+				'page'	=>	array('start'=>0, 'end'=>0)
+			);
 	
 		/*
 		* Memory Usage
 		*/
 		protected static $memory_load = array(
-										'boot_peak' 	=>	array('start'=>0, 'end'=>0),
-										'boot_regular'	=>	array('start'=>0, 'end'=>0),
-										'init_peak' 	=>	array('start'=>0, 'end'=>0),
-										'init_regular'	=>	array('start'=>0, 'end'=>0)
-									);
+				'boot_peak' 	=>	array('start'=>0, 'end'=>0),
+				'boot_regular'	=>	array('start'=>0, 'end'=>0),
+				'init_peak' 	=>	array('start'=>0, 'end'=>0),
+				'init_regular'	=>	array('start'=>0, 'end'=>0)
+			);
 	
 		/*
 		* Sql Usage
@@ -47,7 +47,7 @@
 			self::$memory_load['init_peak']['start'] = memory_get_peak_usage(true);
 			self::$memory_load['init_regular']['start'] = memory_get_usage(true);;
 	
-			ob_start( array('Devel_Class', 'handle_buffer') );
+			ob_start( array('LDDevel_Class', 'handle_buffer') );
 		}
 	
 		public static function core_uninitialize()
@@ -181,13 +181,13 @@
 	
 			if( !$is_ajax ) {
 	
-			$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/devel/resources/css/frontend.css').'" />' . "\n";
+			$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/lddevel/resources/css/frontend.css').'" />' . "\n";
 	
 				if( $has_firebug ) {
 					$output .= '<script src="https://getfirebug.com/firebug-lite.js#overrideConsole=true,startOpened=true"></script>';
 				}
 	
-				$output .= '<script type="text/javascript" src="'.root_url('/modules/devel/resources/javascript/devel.js').'"></script>' . "\n";
+				$output .= '<script type="text/javascript" src="'.root_url('/modules/lddevel/resources/javascript/devel.js').'"></script>' . "\n";
 	
 				$output .= '<div id="devel-module" class="devel-module'.($is_backend ? ' devel-module-backend' : '').'">';
 				$output .= '<div class="devel-module-wrapper">';
@@ -404,10 +404,10 @@
 				$output .= '</div>'; //.devel-module-wrapper
 				$output .= '</div>'; //.devel-module
 	
-			$template_content = preg_replace(',\</body\>,i', $output.'</body>', $buffer, 1);
-				return $template_content;
+				$template_content = preg_replace(',\</body\>,i', $output.'</body>', $buffer, 1);
+					return $template_content;
 			} else {
-			//$template_content = preg_replace(',\</body\>,i', $output.'</body>', $buffer, 1);
+				//$template_content = preg_replace(',\</body\>,i', $output.'</body>', $buffer, 1);
 				return $output;
 			}
 		}
@@ -440,14 +440,14 @@
 			$caller = array();
 		
 			foreach($trace as $call) {
-			if( isset( $call['class'] ) && __CLASS__ == $call['class'] )
-				continue;
-			//$caller[] = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
-					$new = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
-					$new .= '(' . (isset($call['file']) ? $call['file'] : '') . ':' . (isset($call['line']) ? $call['line'] : '') . ')';
-					//$new .= '[' . (isset($call['args']) ? implode(",", $call['args']) : '') . ']';
-					$caller[] = $new;
-					//var_dump($call);
+				if( isset( $call['class'] ) && __CLASS__ == $call['class'] )
+					continue;
+				//$caller[] = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
+				$new = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
+				$new .= '(' . (isset($call['file']) ? $call['file'] : '') . ':' . (isset($call['line']) ? $call['line'] : '') . ')';
+				//$new .= '[' . (isset($call['args']) ? implode(",", $call['args']) : '') . ']';
+				$caller[] = $new;
+				//var_dump($call);
 			}
 		
 			return join(', ', $caller);
