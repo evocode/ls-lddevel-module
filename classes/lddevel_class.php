@@ -91,10 +91,7 @@
 		{
 			$key = uniqid();
 			self::$sql_log[] = array('sql'=>$sql, 'key'=>$key);
-	
-			$test = self::get_backtrace();
-			//var_dump($test);
-	
+
 			if( !isset(self::$sql_load[$key]) )
 				self::$sql_load[$key] = array('start'=>0, 'end'=>0);
 			
