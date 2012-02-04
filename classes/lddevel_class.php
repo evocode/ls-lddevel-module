@@ -5,8 +5,8 @@
 		protected static $instance = null;
 	
 		/*
-	 	* Page Load
-	 	*/
+		* Page Load
+		*/
 		protected static $page_load = array(
 										'boot'			=>	array('start'=>0, 'end'=>0),
 										'init'			=>	array('start'=>0, 'end'=>0),
@@ -14,8 +14,8 @@
 									);
 	
 		/*
-	 	* Memory Usage
-	 	*/
+		* Memory Usage
+		*/
 		protected static $memory_load = array(
 										'boot_peak' 	=>	array('start'=>0, 'end'=>0),
 										'boot_regular'	=>	array('start'=>0, 'end'=>0),
@@ -24,8 +24,8 @@
 									);
 	
 		/*
-	 	* Sql Usage
-	 	*/
+		* Sql Usage
+		*/
 		protected static $sql_log = array();
 		protected static $sql_load = array();
 		protected static $sql_total_times = 0;
@@ -412,7 +412,8 @@
 			}
 		}
 	
-		public static function recursive_print ($varname, $varval) {
+		public static function recursive_print ($varname, $varval)
+		{
 			$output = '';
 	
 			if( is_array($varval) ) {
@@ -432,24 +433,25 @@
 	
 			return $output;
 		}
-	
-	public static function get_backtrace() {
-		$trace	= array_reverse( debug_backtrace() );
-		$caller = array();
-	
-		foreach($trace as $call) {
-		if( isset( $call['class'] ) && __CLASS__ == $call['class'] )
-			continue;
-		//$caller[] = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
-				$new = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
-				$new .= '(' . (isset($call['file']) ? $call['file'] : '') . ':' . (isset($call['line']) ? $call['line'] : '') . ')';
-				//$new .= '[' . (isset($call['args']) ? implode(",", $call['args']) : '') . ']';
-				$caller[] = $new;
-				//var_dump($call);
+		
+		public static function get_backtrace()
+		{
+			$trace	= array_reverse( debug_backtrace() );
+			$caller = array();
+		
+			foreach($trace as $call) {
+			if( isset( $call['class'] ) && __CLASS__ == $call['class'] )
+				continue;
+			//$caller[] = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
+					$new = isset( $call['class'] ) ? "{$call['class']}->{$call['function']}" : $call['function'];
+					$new .= '(' . (isset($call['file']) ? $call['file'] : '') . ':' . (isset($call['line']) ? $call['line'] : '') . ')';
+					//$new .= '[' . (isset($call['args']) ? implode(",", $call['args']) : '') . ']';
+					$caller[] = $new;
+					//var_dump($call);
+			}
+		
+			return join(', ', $caller);
 		}
-	
-		return join(', ', $caller);
-	}
 	
 		public static function safe_parameter($str)
 		{
