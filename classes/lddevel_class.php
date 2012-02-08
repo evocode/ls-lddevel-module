@@ -134,13 +134,13 @@
 	
 		public static function print_footer($buffer, $is_ajax=false)
 		{
-			global $module_devel_start_time;
+			global $lddevel_start_time;
 	
 			$is_backend = self::is_backend();
 			$timenow = microtime(true);
 	
-			if( isset($module_devel_start_time) ) {
-				self::$page_load['boot']['start'] = $module_devel_start_time;
+			if( isset($lddevel_start_time) ) {
+				self::$page_load['boot']['start'] = $lddevel_start_time;
 			}
 	
 			self::$page_load['boot']['end'] = $timenow;
@@ -199,13 +199,13 @@
 	
 			if( $real_page_load_time == 0 )
 			{
-				$output .= 'LDDevel.Logger.log("Assume Page Load Time: ' . number_format($page_load_time, 4) . ' s");' . "\n";
+				$output .= 'LDDevel.Logger.log("Est Page Load: ' . number_format($page_load_time, 4) . ' s");' . "\n";
 	
-				$output .= 'LDDevel.Logger.log('. self::safe_parameter('This information is tracked after Lemonstand has intilized resulting in slightly different values. Please consider completing the installation part 2 <a href="http://forum.lemonstandapp.com/topic/1735-devel-module/" target="_blank">here</a> to track the real data.') . ', "info");' . "\n";
+				/*$output .= 'LDDevel.Logger.log('. self::safe_parameter('This information is tracked after Lemonstand has intilized resulting in slightly different values. Please consider completing the installation part 2 <a href="http://forum.lemonstandapp.com/topic/1735-devel-module/" target="_blank">here</a> to track the real data.') . ', "info");' . "\n";*/
 			}
 			else
 			{
-				$output .= 'LDDevel.Logger.log("Page Load Time: ' . number_format($real_page_load_time, 4) . ' s");' . "\n";
+				$output .= 'LDDevel.Logger.log("Page Load: ' . number_format($real_page_load_time, 4) . ' s");' . "\n";
 	
 				if( $boot_sequence > 0 ) {
 					$output .= 'LDDevel.Logger.log(" + Boot Sequence: ' . number_format($boot_sequence, 4) . ' s");' . "\n";
