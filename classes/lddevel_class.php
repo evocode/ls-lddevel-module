@@ -136,6 +136,7 @@
 		{
 			global $module_devel_start_time;
 	
+			$is_backend = self::is_backend();
 			$timenow = microtime(true);
 	
 			if( isset($module_devel_start_time) ) {
@@ -165,13 +166,7 @@
 			//Start output
 	
 			$output = '';
-	
-			$backendUrl = '/' . Core_String::normalizeUri(Phpr::$config->get('BACKEND_URL', 'backend'));
 
-			$currentUrl = isset(Phpr::$request->get_fields['q']) ? Phpr::$request->get_fields['q'] : '';
-	
-			$is_backend = stristr($currentUrl, $backendUrl) === false ? false : true;
-	
 			if( !$is_ajax ) {
 	
 				$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/lddevel/resources/css/frontend.css').'" />' . "\n";
@@ -441,5 +436,11 @@
 			$result = preg_replace( '/\s+/', ' ', $result );
 			$result = json_encode($result);
 			return $result;
+		}
+
+		public static function is_backend() {
+			$backend_url = '/' . Core_String::normalizeUri(Phpr::$config->get('BACKEND_URL', 'backend'));
+			$current_url = '/' . Core_String::normalizeUri(isset(Phpr::$request->get_fields['q']) ? Phpr::$request->get_fields['q'] : '');
+			return stristr($current_url, $backend_url) !== false;
 		}
 	}
