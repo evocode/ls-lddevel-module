@@ -187,8 +187,10 @@
 			//Start Request
 	
 			$title = $is_ajax ? 'Ajax Page Request' : 'Page Request';
-			$output .= 'LDDevel.Logger.startGroup("'.$title.': '.date("M j, H:i:s").'");' . "\n";
-	
+
+			$timeZoneObj = new DateTimeZone( Phpr::$config->get('TIMEZONE') );
+			$timeObj = new Phpr_DateTime( null, $timeZoneObj );
+			$output .= 'LDDevel.Logger.startGroup("'.$title.': ' . $timeObj->format('%b %e, %H:%M:%S') . '");' . "\n";
 	
 			//Start Page Information
 	
