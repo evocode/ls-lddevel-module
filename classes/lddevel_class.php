@@ -162,28 +162,20 @@
 			$total_queries = count(self::$sql_log);
 			$average_query = $total_queries > 0 ? self::$sql_total_times / $total_queries : 0;
 	
-			$has_firebug = false;
-	
 			//Start output
 	
 			$output = '';
 	
 			$backendUrl = '/' . Core_String::normalizeUri(Phpr::$config->get('BACKEND_URL', 'backend'));
-			$loginUrl = $backendUrl . 'session/handle/create';
-	
+
 			$currentUrl = isset(Phpr::$request->get_fields['q']) ? Phpr::$request->get_fields['q'] : '';
 	
-			$is_login = stristr($currentUrl, $loginUrl) === false ? false : true;
 			$is_backend = stristr($currentUrl, $backendUrl) === false ? false : true;
 	
 			if( !$is_ajax ) {
 	
 				$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/lddevel/resources/css/frontend.css').'" />' . "\n";
-	
-				if( $has_firebug ) {
-					$output .= '<script src="https://getfirebug.com/firebug-lite.js#overrideConsole=true,startOpened=true"></script>';
-				}
-	
+
 				$output .= '<script>window.jQuery || document.write(\'<script src="'.root_url('/modules/lddevel/resources/javascript/jquery-1.7.1.min.js').'"><\/script>\')</script>' . "\n";
 				$output .= '<script type="text/javascript" src="'.root_url('/modules/lddevel/resources/javascript/devel.js').'"></script>' . "\n";
 	
@@ -196,16 +188,8 @@
 	
 			//Start Javascript
 	
-			if( $is_backend ) {
-				$output .= '<script type="text/javascript"> jQuery.noConflict(); </script>';
-			}
-	
 			$output .= '<script type="text/javascript"> jQuery(document).ready(function($) { ' . "\n";
-	
-			//if( $has_firebug ) {
-				//$output .= 'LDDevel.Logger.init({ hasFirebug: true });' . "\n";
-			//}
-	
+
 			$output .= 'LDDevel.Logger.init();' . "\n";
 	
 			//Start Request
