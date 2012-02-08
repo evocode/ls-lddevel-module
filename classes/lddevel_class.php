@@ -283,20 +283,9 @@
 			}
 			$output .= "\n" . ']);' . "\n";
 	
-			/*$rid = 1;
-			foreach(self::$sql_log as $querydata) {
-				$key = $querydata['key'];
-				$query_time = ( isset(self::$sql_load[$key]) && self::$sql_load[$key]['start'] > 0 && self::$sql_load[$key]['end'] > 0 ) ? self::$sql_load[$key]['end'] - self::$sql_load[$key]['start'] : -1;
-				$time_str = ( $query_time > -1 ) ? number_format($query_time, 4) : '"N/A"';
-	
-				$output .= 'LDDevel.Logger.logQuery("\('.$time_str.'\) '.self::safe_parameter($querydata['sql']).'");' . "\n";
-				$rid++;
-			}*/
-	
 			$output .= 'LDDevel.Logger.endGroup();' . "\n";
 	
 			//End Query Log
-	
 	
 			/*$output .= '<div class="devel-heading">Lemonstand Settings</div>';
 	
@@ -363,13 +352,10 @@
 	
 			//End Other Variables
 	
-	
 			//$output .= '<div class="devel-heading">Backtrace</div>';
-	
 			//$output .= '<div class="page-backtrace">';
 			//$output .= '<strong>Declared Classes</strong><div class="page-variables-content">' . self::recursive_print('debug_backtrace', debug_backtrace());
 			//$output .= '</div></div>' . "\n";
-	
 	
 			$output .= 'LDDevel.Logger.endGroup();' . "\n";
 	
@@ -382,7 +368,7 @@
 				$output .= '</div>'; //.devel-module
 	
 				$template_content = preg_replace(',\</body\>,i', $output.'</body>', $buffer, 1);
-					return $template_content;
+				return $template_content;
 			} else {
 				//$template_content = preg_replace(',\</body\>,i', $output.'</body>', $buffer, 1);
 				return $output;
