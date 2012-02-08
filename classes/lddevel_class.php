@@ -53,9 +53,7 @@
 		public static function core_uninitialize()
 		{
 			if(self::$active_query_key) {
-				# set the last query memory
 				$query_memory = memory_get_peak_usage(true);
-
 				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
 			}
 			
@@ -82,9 +80,7 @@
 			self::$page_load['page']['end'] = microtime(true);
 	
 			if(self::$active_query_key) {
-				# set the last query memory
 				$query_memory = memory_get_peak_usage(true);
-
 				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
 			}
 			
@@ -100,11 +96,9 @@
 				self::$sql_load[$key] = array('start'=>0, 'end'=>0);
 			
 			self::$sql_load[$key]['start'] = microtime(true);
-			
-			# set the memory for the LAST key because we need to include hydration
+
 			if(self::$active_query_key) {
 				$query_memory = memory_get_peak_usage(true);
-			
 				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
 				self::$sql_load[self::$active_query_key]['total_memory'] = $query_memory;
 			}
@@ -128,9 +122,7 @@
 		public static function handle_buffer($buffer)
 		{
 			if(self::$active_query_key) {
-				# set the last query memory
 				$query_memory = memory_get_peak_usage(true);
-				
 				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
 				self::$sql_load[self::$active_query_key]['total_memory'] = $query_memory;
 			}
@@ -281,11 +273,15 @@
 					$total_memory_str = 'Unknown MB';
 					
 				$priority = 1;
-				
-				if( $query_time > $average_query ) {
+
+				if( round($query_time, 4) > round($average_query, 4) ) {
 					$priority = 2;
 				}
-	
+
+				if( $query_time > 1 ) {
+					$priority = 3;
+				}
+
 				$output .= '{ id: '.$rid.', sql: '.self::safe_parameter($querydata['sql']).', single_time: '.$single_time_str.', total_time: '.$total_time_str.', single_memory: "'.$single_memory_str.'", total_memory: "'.$total_memory_str.'", priority: '.$priority.' }, ' . "\n";
 				$rid++;
 			}
