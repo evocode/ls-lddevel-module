@@ -13,7 +13,8 @@ class LDDevel_Module extends Core_ModuleBase
 		(
 			"Development Tools",
 			"Adds development information to the footer",
-			"Patrick Heeney"
+			"Lemonoid",
+			"http://lemonoid.com"
 		);
 	}
 
