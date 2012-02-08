@@ -52,10 +52,12 @@
 	
 		public static function core_uninitialize()
 		{
-			# set the last query memory
-			$query_memory = memory_get_peak_usage(true);
-			
-			self::$sql_load[self::$active_query_key]['memory'] = $query_memory - self::$previous_query_memory;
+			if(self::$active_query_key) {
+				# set the last query memory
+				$query_memory = memory_get_peak_usage(true);
+
+				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
+			}
 			
 			self::print_footer();
 		}
@@ -79,10 +81,12 @@
 		{
 			self::$page_load['page']['end'] = microtime(true);
 	
-			# set the last query memory
-			$query_memory = memory_get_peak_usage(true);
-			
-			self::$sql_load[self::$active_query_key]['memory'] = $query_memory - self::$previous_query_memory;
+			if(self::$active_query_key) {
+				# set the last query memory
+				$query_memory = memory_get_peak_usage(true);
+
+				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
+			}
 			
 			echo self::print_footer($page, true);
 		}
@@ -123,11 +127,13 @@
 	
 		public static function handle_buffer($buffer)
 		{
-			# set the last query memory
-			$query_memory = memory_get_peak_usage(true);
-			
-			self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
-			self::$sql_load[self::$active_query_key]['total_memory'] = $query_memory;
+			if(self::$active_query_key) {
+				# set the last query memory
+				$query_memory = memory_get_peak_usage(true);
+				
+				self::$sql_load[self::$active_query_key]['single_memory'] = $query_memory - self::$previous_query_memory;
+				self::$sql_load[self::$active_query_key]['total_memory'] = $query_memory;
+			}
 			
 			return self::print_footer($buffer, false);
 		}
@@ -138,7 +144,8 @@
 	
 			$is_backend = self::is_backend();
 			$timenow = microtime(true);
-	
+			$output = '';
+
 			if( isset($lddevel_start_time) ) {
 				self::$page_load['boot']['start'] = $lddevel_start_time;
 			}
@@ -165,8 +172,6 @@
 	
 			//Start output
 	
-			$output = '';
-
 			if( !$is_ajax ) {
 	
 				$output .= '<link rel="stylesheet" type="text/css" href="'.root_url('/modules/lddevel/resources/css/frontend.css').'" />' . "\n";
@@ -241,9 +246,9 @@
 	
 			$output .= 'LDDevel.Logger.startGroup("Query Log");' . "\n";
 	
-			$note = '<div class="page-query-color-sample query-log-low">&nbsp;</div>';
-			$note .= '<div class="page-query-color-text">- Higher than average execution</div>';
-			$note .= '<div class="page-query-color-sample query-log-high">&nbsp;</div>';
+			$note = '<div class="page-query-color-sample query-log-p2">&nbsp;</div>';
+			$note .= '<div class="page-query-color-text">- Higher than average (' . number_format($average_query, 4) . 's)</div>';
+			$note .= '<div class="page-query-color-sample query-log-p3">&nbsp;</div>';
 			$note .= '<div class="page-query-color-text">- Longer than 1 second</div>';
 			$note .= '<div class="devel-clear"></div>';
 	
@@ -255,16 +260,22 @@
 			
 			foreach(self::$sql_log as $querydata) {
 				$key = $querydata['key'];
+
 				$query_time = ( isset(self::$sql_load[$key]) && self::$sql_load[$key]['start'] > 0 && self::$sql_load[$key]['end'] > 0 ) ? self::$sql_load[$key]['end'] - self::$sql_load[$key]['start'] : -1;
+
 				$single_time_str = ( $query_time > -1 ) ? str_replace(',', '', number_format($query_time, 4)) : '"N/A"';
-				$total_time_str = ( self::$sql_load[$key]['start'] - self::$page_load['boot']['start'] > -1 ) ? str_replace(',', '', number_format(self::$sql_load[$key]['start'] - self::$page_load['boot']['start'], 4)) : '"N/A"';
+
+				if(isset(self::$page_load['boot']['start']) && self::$page_load['boot']['start'] > 0)
+					$total_time_str = ( self::$sql_load[$key]['start'] - self::$page_load['boot']['start'] > -1 ) ? str_replace(',', '', number_format(self::$sql_load[$key]['start'] - self::$page_load['boot']['start'], 4)) : '"N/A"';
+				else
+					$total_time_str = ( self::$sql_load[$key]['start'] - self::$page_load['init']['start'] > -1 ) ? str_replace(',', '', number_format(self::$sql_load[$key]['start'] - self::$page_load['init']['start'], 4)) : '"N/A"';
 				
-				if(isset(self::$sql_load[$key], self::$sql_load[$key]['single_memory']))
+				if(isset(self::$sql_load[$key]['single_memory']))
 					$single_memory_str = self::$sql_load[$key]['single_memory'] / 1024 / 1024 . ' MB';
 				else
 					$single_memory_str = 'Unknown MB';
 				
-				if(isset(self::$sql_load[$key], self::$sql_load[$key]['total_memory']))
+				if(isset(self::$sql_load[$key]['total_memory']))
 					$total_memory_str = self::$sql_load[$key]['total_memory'] / 1024 / 1024 . ' MB';
 				else
 					$total_memory_str = 'Unknown MB';
