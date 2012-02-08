@@ -190,7 +190,7 @@
 			//Start Request
 	
 			$title = $is_ajax ? 'Ajax Page Request' : 'Page Request';
-			$output .= 'LDDevel.Logger.startGroup("'.$title.': '.date("F j, Y, g:i a").'");' . "\n";
+			$output .= 'LDDevel.Logger.startGroup("'.$title.': '.date("M j, H:i:s").'");' . "\n";
 	
 	
 			//Start Page Information
