@@ -84,6 +84,10 @@ class LDDevel_Class
 		if (defined('NO_LDDEVEL') && NO_LDDEVEL)
 			return $buffer;
 
+		//Do not run via CLI
+		if (ls_detect_command_line_interface())
+			return $buffer;
+
 		if (!$this->options)
 			$this->load_options();
 
